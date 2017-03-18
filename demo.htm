@@ -1,0 +1,48 @@
+<!doctype html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+
+/* sample CSS to set the initial dimensions of images that will be zoomable */
+.sampleimage{
+	width: 300px;
+	height: auto;
+	margin-right: 50px;
+}
+
+</style>
+
+<link rel="stylesheet" href="zoomio.css" />
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+<script src="zoomio.js">
+
+/***********************************************
+* Zoomio- jQuery In-Place Image Zoom - (c) Dynamic Drive DHTML code library (www.dynamicdrive.com)
+* Please keep this notice intact
+* Visit Dynamic Drive at http://www.dynamicdrive.com/ for this script and 100s more
+***********************************************/
+
+</script>
+
+<script>
+
+jQuery(function($){ // on DOM load
+	$('.sampleimage').zoomio({
+		fadeduration: 500
+	})
+})
+
+</script>
+
+</head>
+
+<body>
+
+<img class="sampleimage" src="carandgirlsmall.jpg" data-largesrc="carandgirl.jpg" /> <img class="sampleimage" src="bluewall.jpg" />
+
+</body>
+
+</html>
