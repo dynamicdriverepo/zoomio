@@ -1,7 +1,7 @@
 {
   "name": "zoomio",
   "title": "Zoomio jQuery Image Zoom",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Zoomio is an easy to set up, mobile friendly Image Zoom script that overlays an enlarged image directly on top of the original image when activated.",
   "main": "zoomio.js",
   "homepage": "http://dynamicdrive.com/dynamicindex4/zoomio/",
