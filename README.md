@@ -4,6 +4,14 @@
 
 Zoomio can be called on the same image more than once to take into account any changes to the image, such as after updating the image's `src` property to zoom in on a different image.
 
+## Installation
+Refer to demo.htm to see the necessary code to add to the HEAD section of your page as a requirement to start using Zoomio. jQuery 1.7.0 or above is required and referenced in the script.
+
+For npm and bower users, alternatively, run:
+
+    $ npm install jquery-lazy
+    $ bower install jquery-lazy
+
 ## Setup Information
 Zoomio is defined as a jQuery plugin. Simply call the `zoomio()` function on top of the desired image(s) to make them zoomable after the document has loaded:
 

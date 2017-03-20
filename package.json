@@ -1,0 +1,34 @@
+{
+  "name": "zoomio",
+  "title": "Zoomio jQuery Image Zoom",
+  "version": "2.0.0",
+  "description": "Zoomio is an easy to set up, mobile friendly Image Zoom script that overlays an enlarged image directly on top of the original image when activated.",
+  "main": "zoomio.js",
+  "homepage": "http://dynamicdrive.com/dynamicindex4/zoomio/",
+  "bugs": "http://dynamicdrive.com/forums/",
+  "author": {
+    "name": "George Chiang",
+    "email": "ddrivehelp@gmail.com",
+    "url": "http://www.dynamicdrive.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dynamicdriverepo/zoomio.git"
+  },
+  "keywords": [
+    "zoom",
+    "product",
+    "image",
+    "images",
+    "jquery",
+    "jquery-plugin",
+    "magnify"
+  ],
+  "licenses": [{
+    "type": "MIT",
+    "url": "http://www.opensource.org/licenses/mit-license.php"
+  }],
+  "dependencies": {
+    "jquery": ">=1.7.0"
+  }
+}
