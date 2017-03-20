@@ -1,6 +1,6 @@
 // Zoomio jQuery Image Zoom script
 // By Dynamic Drive: http://www.dynamicdrive.com
-// March 20th- Updated to v2.0.1, which now supports specifying a different, higher resolution image (via a data-largesrc attribute) to use as the zoomed in image.
+// March 20th- Updated to v2.0.2, which now supports specifying a different, higher resolution image (via a data-largesrc attribute) to use as the zoomed in image.
 
 ;(function($){
 	var defaults = {fadeduration:500}
