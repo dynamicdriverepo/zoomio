@@ -9,8 +9,8 @@ Refer to demo.htm to see the necessary code to add to the HEAD section of your p
 
 For npm and bower users, alternatively, run:
 
-    $ npm install jquery-lazy
-    $ bower install jquery-lazy
+    $ npm install zoomio
+    $ bower install zoomio
 
 ## Setup Information
 Zoomio is defined as a jQuery plugin. Simply call the `zoomio()` function on top of the desired image(s) to make them zoomable after the document has loaded:
