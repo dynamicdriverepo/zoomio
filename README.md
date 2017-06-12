@@ -43,6 +43,7 @@ In general the second approach is better, as the large image is only loaded when
 | `fadeduration: milliseconds`      | The duration of the fade in effect, in milliseconds (ie: 1000 = 1 second). |
 | `w: widthString`      | The width of the zoom area interface in any desired unit, such as "300px", "80%" etc. By default Zoomio uses the width of the original image as the zoom area's width, creating an overlay that precisely overlaps the original image. |
 | `h: heightString` | The height of the zoom area interface in any desired unit, such as "300px", "80%" etc. By default Zoomio uses the height of the original image as the zoom area's height, creating an overlay that precisely overlaps the original image. |
+| `scale: int` | Explicitly sets the dimensions of the enlarged image when viewers zoom in on the image, as a multiple of the original thumbnail image's dimensions. A value of 3 for example would set the enlarged image to be 3 times the dimensions of the original thumbnail image shown on the page. |
 Example:
 
     $('#myimage').zoomio({
