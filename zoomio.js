@@ -1,11 +1,12 @@
 // Zoomio jQuery Image Zoom script
 // By Dynamic Drive: http://www.dynamicdrive.com
-// March 20th- Updated to v2.0.2, which now supports specifying a different, higher resolution image (via a data-largesrc attribute) to use as the zoomed in image.
+// June 11th 17'- Updated to v2.0.3, which adds option to specify magnify level inside options. Also fixed bug with magnified image not dimissing sometimes.
 
 ;(function($){
 	var defaults = {fadeduration:500}
 	var $zoomiocontainer, $zoomioloadingdiv
 	var currentzoominfo = { $zoomimage:null, offset:[,], settings:null, multiplier:[,] }
+	var $curimg = $() // variable to reference currently active thumbnail image
 	var ismobile = navigator.userAgent.match(/(iPad)|(iPhone)|(iPod)|(android)|(webOS)/i) != null //boolean check for popular mobile browsers
 
 	function getDimensions($target){
@@ -20,6 +21,11 @@
 		var s = settings || defaults
 		var trigger = ismobile? 'touchstart' : 'mouseenter'
 		$img.off('touchstart mouseenter').on(trigger, function(e){ // on 'touchstart' or 'mouseenter'
+			// quick and dirty way to prevent mouseenter over thumbnail from firing again sometimes when $zoomiocontainer fades out while mouse is over thumbnail, leading to retriggering of mouseenter
+			if ($zoomiocontainer.css('visibility') == 'visible' && $zoomiocontainer.queue('fx').length ==1 && $curimg == $img){
+				return
+			}
+			$curimg = $img // set current active thumbnail image
 			var jqueryevt = e // remember jQuery event object (for use to call e.stopPropagation())
 			var e = jqueryevt.originalEvent.changedTouches? jqueryevt.originalEvent.changedTouches[0] : jqueryevt
 			var offset = {left:getoffset($img.get(0), 'offsetLeft'), top:getoffset($img.get(0), 'offsetTop') }
@@ -34,7 +40,7 @@
 			if ($img.data('largesrc')){
 				$zoomioloadingdiv.css({width:imgdimensions.w, height:imgdimensions.h, left:offset.left, top:offset.top, visibility:'visible', zIndex:10000}) // show loading DIV
 			}
-			$zoomiocontainer.html( '<img src="' + $targetimg + '"></div>' ) // add image inside zoom container
+			$zoomiocontainer.html( '<img src="' + $targetimg + '">' ) // add image inside zoom container
 			$zoomimage = $zoomiocontainer.find('img')
 			if ($zoomimage.get(0).complete){
 				zoomdfd.resolve()
@@ -47,6 +53,9 @@
 			zoomdfd.done(function(){
 				$zoomiocontainer.css({width:containerwidth, height:containerheight, left:offset.left, top:offset.top}) // set zoom container dimensions and position
 				var zoomiocontainerdimensions = getDimensions($zoomiocontainer)
+				if (settings.scale){ // v2.03 feature
+					$zoomimage.css({width: $img.width() * settings.scale})
+				}
 				var zoomimgdimensions = getDimensions($zoomimage)
 				$zoomioloadingdiv.css({zIndex: 9998})
 				$zoomiocontainer.stop().css({visibility:'visible', opacity:0}).animate({opacity:1}, s.fadeduration, function(){
@@ -90,6 +99,8 @@
 		$zoomiocontainer = $('<div id="zoomiocontainer">').appendTo(document.body)
 		$zoomioloadingdiv = $('<div id="zoomioloadingdiv"><div class="spinner"></div></div>').appendTo(document.body)
 		if (!ismobile){
+			$zoomiocontainer.on('mouseenter', function(e){
+			})
 			$zoomiocontainer.on('mousemove', function(e){
 				var $zoomimage = currentzoominfo.$zoomimage
 				var imgoffset = currentzoominfo.offset

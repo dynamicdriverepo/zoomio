@@ -7,10 +7,14 @@
 }
 
 #zoomiocontainer img{ /* image inside zoom container */
-	width: auto !important;
+	width: auto;
 	height: auto !important;
 	position: absolute !important;
 	display: block !important;
+}
+
+.disablepointer{
+	pointer-events: none;
 }
 
 #zoomiocontainer.mobileclass{ /* CSS class added to zoom container on mobile OS */
