@@ -1,6 +1,7 @@
 // Zoomio jQuery Image Zoom script
 // By Dynamic Drive: http://www.dynamicdrive.com
-// June 11th 17'- Updated to v2.0.3, which adds option to specify magnify level inside options. Also fixed bug with magnified image not dimissing sometimes.
+// June 14th 17'- Updated to v2.0.4, which adds:
+// 1) Option to specify magnify level inside options. 2) Flag to indicate if images are contained inside a CSS fixed container 3) Changed mobile trigger from "touchstart" to "click"
 
 ;(function($){
 	var defaults = {fadeduration:500}
@@ -19,8 +20,8 @@
 
 	function zoomio($img, settings){ // zoomio plugin function
 		var s = settings || defaults
-		var trigger = ismobile? 'touchstart' : 'mouseenter'
-		$img.off('touchstart mouseenter').on(trigger, function(e){ // on 'touchstart' or 'mouseenter'
+		var trigger = ismobile? 'click' : 'mouseenter'
+		$img.off(trigger).on(trigger, function(e){ // on 'click' or 'mouseenter'
 			// quick and dirty way to prevent mouseenter over thumbnail from firing again sometimes when $zoomiocontainer fades out while mouse is over thumbnail, leading to retriggering of mouseenter
 			if ($zoomiocontainer.css('visibility') == 'visible' && $zoomiocontainer.queue('fx').length ==1 && $curimg == $img){
 				return
@@ -28,7 +29,14 @@
 			$curimg = $img // set current active thumbnail image
 			var jqueryevt = e // remember jQuery event object (for use to call e.stopPropagation())
 			var e = jqueryevt.originalEvent.changedTouches? jqueryevt.originalEvent.changedTouches[0] : jqueryevt
-			var offset = {left:getoffset($img.get(0), 'offsetLeft'), top:getoffset($img.get(0), 'offsetTop') }
+			var offset
+			if (settings.fixedcontainer == true){ // if thumbnail image is wrapped in a fixed element
+				var eloffset = $img.offset()
+				offset = {left:eloffset.left, top:eloffset.top}
+			}
+			else{ // use non jQuery method of getting element offsets, which works in older Android chrome browsers
+				offset = {left:getoffset($img.get(0), 'offsetLeft'), top:getoffset($img.get(0), 'offsetTop') }
+			}
 			var mousecoord = [e.pageX - offset.left, e.pageY - offset.top]
 			var imgdimensions = getDimensions($img)
 			var containerwidth = s.w || imgdimensions.w
@@ -111,7 +119,7 @@
 			$zoomiocontainer.on('mouseleave', function(){
 				$zoomioloadingdiv.css({visibility: 'hidden'})
 				$zoomiocontainer.stop().animate({opacity:0}, currentzoominfo.settings.fadeduration, function(){
-					$(this).css({visibility:'hidden'})
+					$(this).css({visibility:'hidden', left:'-100%', top:'-100%'})
 				})
 			})
 		}
@@ -120,11 +128,11 @@
 			$zoomiocontainer.on('touchstart', function(e){
 				e.stopPropagation() // stopPropagation() works on jquery evt object (versus e.originalEvent.changedTouches[0]
 			})
-			$(document).on('touchstart', function(e){
+			$(document).on('touchstart.dismisszoomio', function(e){
 				if (currentzoominfo.$zoomimage){ // if $zoomimage defined
 					$zoomioloadingdiv.css({visibility: 'hidden'})
 					$zoomiocontainer.stop().animate({opacity:0}, currentzoominfo.settings.fadeduration, function(){
-						$(this).css({visibility:'hidden'})
+						$(this).css({visibility:'hidden', left:'-100%', top:'-100%'})
 					})
 				}
 			})
